@@ -24,10 +24,7 @@ namespace ADXAPI
             builder.Services.AddTransient<IADXAccess, ADXAccess>();
             builder.Services.AddTransient<IJWTGenerator, JWTGenerator>();
 
-
             var config = builder.Configuration;
-
-            
 
             X509Certificate2 signingCert = X509CertificateLoader.LoadPkcs12FromFile($"{Environment.CurrentDirectory}{config["CertSettings:Path"]}", config["CertSettings:Password"]);
             X509SecurityKey securityKey = new X509SecurityKey(signingCert);
@@ -60,8 +57,7 @@ namespace ADXAPI
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
-            {
-               
+            {              
                 app.MapOpenApi();
 
                 app.MapScalarApiReference();
@@ -72,7 +68,6 @@ namespace ADXAPI
             app.UseAuthentication();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

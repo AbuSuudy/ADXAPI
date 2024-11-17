@@ -1,23 +1,31 @@
-﻿using Kusto.Data;
+﻿using ADXService.Entity;
+using Kusto.Data;
 using Kusto.Data.Common;
 using Kusto.Data.Ingestion;
 using Kusto.Data.Net.Client;
 using Kusto.Ingest;
+using Microsoft.Extensions.Configuration;
 using System.Data;
 
 namespace ADXService
 {
     public class ADXAccess : IADXAccess
     {
-        // Move environment variable to config
-        private readonly static string kustoUri = Environment.GetEnvironmentVariable("KUSTO_URI");
-        private readonly string ingestUri = Environment.GetEnvironmentVariable("KUSTO_INGEST");
-        private readonly string tenantId = Environment.GetEnvironmentVariable("TENANT_ID");
+        private readonly string ingestUri;
+        private readonly string tenantId;
+        private KustoConnectionStringBuilder kustoConnectionStringBuilder;
         private readonly string databaseName = "adxdb";
         private readonly string tableName = "StormEvents";
         private readonly string tableMappingName = "StormEvents_CSV_Mapping";
         private readonly string blobPath = "https://kustosamples.blob.core.windows.net/samplefiles/StormEvents.csv";
-        private KustoConnectionStringBuilder kustoConnectionStringBuilder = new KustoConnectionStringBuilder(kustoUri).WithAadAzCliAuthentication();
+
+        public ADXAccess(IConfiguration configuration)
+        {
+            ingestUri = configuration["KustoSettings:Kusto_Ingest_uri"];
+            tenantId = configuration["KustoSettings:Tennant_Id"];
+            kustoConnectionStringBuilder = new KustoConnectionStringBuilder(configuration["KustoSettings:Kusto_uri"]).WithAadAzCliAuthentication();
+
+        }
 
         public async Task CreateTable()
         {
@@ -155,8 +163,9 @@ namespace ADXService
             return tableExist;
         }
 
-        public void StormEventsData()
+        public List<StormData> StormEventsData()
         {
+            List<StormData> stormDataList = new List<StormData>();
 
             using (var kustoClient = KustoClientFactory.CreateCslQueryProvider(kustoConnectionStringBuilder))
             {
@@ -175,17 +184,19 @@ namespace ADXService
                     int columnNoState = response.GetOrdinal("State");
                     int columnNoDailyDamage = response.GetOrdinal("DailyDamage");
 
-                    Console.WriteLine("Heavy Rain damages over $1,000,000:");
-
                     while (response.Read())
                     {
-                        Console.WriteLine("{0} - {1}, {2}",
-                          response.GetDateTime(columnNoStartTime),
-                          response.GetString(columnNoState),
-                          response.GetInt64(columnNoDailyDamage));
+                        stormDataList.Add(new StormData
+                        {
+                            DateTime = response.GetDateTime(columnNoStartTime),
+                            State = response.GetString(columnNoState),
+                            DamageCost = response.GetInt64(columnNoDailyDamage)
+                        });
                     }
                 }
             }
+
+            return stormDataList;
         }
 
         public long RowCount()
