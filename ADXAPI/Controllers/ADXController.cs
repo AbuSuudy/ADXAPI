@@ -19,9 +19,9 @@ namespace ADXAPI.Controllers
         }
 
         [HttpGet]
-        [EndpointSummary("Create Table")]
+        [EndpointSummary("Setup Storm Event Table")]
         [EndpointDescription("Create table and ingest Data")]
-        public async Task<IActionResult> CreateTableAndIngestData()
+        public async Task<IActionResult> SetupStormEventTable()
         {
             try
             {
