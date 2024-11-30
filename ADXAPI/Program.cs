@@ -7,7 +7,8 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace ADXAPI
 {
-    public class Program
+    public partial class Program { }
+    public partial class Program
     {
         public static void Main(string[] args)
         {
@@ -26,8 +27,8 @@ namespace ADXAPI
 
             var config = builder.Configuration;
 
-            X509Certificate2 signingCert = X509CertificateLoader.LoadPkcs12FromFile($"{Environment.CurrentDirectory}{config["CertSettings:Path"]}", config["CertSettings:Password"]);
-            X509SecurityKey securityKey = new X509SecurityKey(signingCert);
+             X509Certificate2 signingCert = X509CertificateLoader.LoadPkcs12FromFile($"{config["CertSettings:Path"]}", config["CertSettings:Password"]);
+             X509SecurityKey securityKey = new X509SecurityKey(signingCert);
 
             builder.Services.AddAuthentication(x =>
             {

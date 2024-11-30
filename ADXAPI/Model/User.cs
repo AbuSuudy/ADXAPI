@@ -8,6 +8,6 @@ namespace ADXAPI.Model
 
         public string Password { get; set; }
 
-        public bool ADXAccess { get; set; }    
+        public bool ADXUser { get; set; }    
     }
 }

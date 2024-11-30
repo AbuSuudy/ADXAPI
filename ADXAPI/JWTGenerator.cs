@@ -27,10 +27,10 @@ namespace ADXAPI
 
             if (adxAccess)
             {
-                claims.Add(new Claim(type: "ADXAccess", value: adxAccess.ToString()));
+                claims.Add(new Claim(ClaimTypes.Role , "ADXUser"));
             }
 
-            X509Certificate2 signingCert = X509CertificateLoader.LoadPkcs12FromFile($"{Environment.CurrentDirectory}{config["CertSettings:Path"]}", config["CertSettings:Password"]);
+            X509Certificate2 signingCert = X509CertificateLoader.LoadPkcs12FromFile($"{config["CertSettings:Path"]}", config["CertSettings:Password"]);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

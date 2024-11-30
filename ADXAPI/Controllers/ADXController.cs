@@ -8,7 +8,9 @@ using System.Xml.Linq;
 namespace ADXAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
-    [RequiresClaimAttribute("ADXAccess", "True")]
+    //Using custom claims with  Attribute filter
+    //[RequiresClaimAttribute("ADXUser", "True")]
+    [Authorize (Roles= "ADXUser")]
     [ApiController]
     public class ADXController : ControllerBase
     {
@@ -37,7 +39,7 @@ namespace ADXAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return Problem(ex.Message);
             }
 
         }
@@ -57,13 +59,13 @@ namespace ADXAPI.Controllers
                 }
                 else
                 {
-                    return BadRequest("Table is not created");
+                    return Problem("Storm Data table doesn't exsit.");
                 }
 
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return Problem(ex.Message);
             }
         }
 

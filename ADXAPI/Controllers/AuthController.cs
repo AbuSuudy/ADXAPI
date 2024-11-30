@@ -15,13 +15,13 @@ namespace ADXAPI.Controllers
             {
                 Email = "Test@gmail.com",
                 Password = "Test",
-                ADXAccess = true
+                ADXUser = true
             },
             new User
             {
                 Email = "Test2@gmail.com",
                 Password = "Test",
-                ADXAccess = false
+                ADXUser = false
             }
         };
 
@@ -52,7 +52,7 @@ namespace ADXAPI.Controllers
                     return Unauthorized("Wrong email or password");
                 }
 
-                return Ok(jwtGenerator.GenerateToken(user.Email, user.ADXAccess));
+                return Ok(jwtGenerator.GenerateToken(user.Email, user.ADXUser));
 
             }
             catch (Exception ex)
