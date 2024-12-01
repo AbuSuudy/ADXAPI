@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 
 namespace ADXAPI
 {
@@ -27,8 +28,10 @@ namespace ADXAPI
 
             var config = builder.Configuration;
 
-             X509Certificate2 signingCert = X509CertificateLoader.LoadPkcs12FromFile($"{config["CertSettings:Path"]}", config["CertSettings:Password"]);
-             X509SecurityKey securityKey = new X509SecurityKey(signingCert);
+            //X509Certificate2 signingCert = X509CertificateLoader.LoadPkcs12FromFile($"{config["CertSettings:Path"]}", config["CertSettings:Password"]);
+            //X509SecurityKey securityKey = new X509SecurityKey(signingCert);
+
+            var key = Encoding.UTF8.GetBytes(config["JwtSettings:key"]);
 
             builder.Services.AddAuthentication(x =>
             {
@@ -42,7 +45,8 @@ namespace ADXAPI
                 {
                     ValidIssuer = config["JwtSettings:Issuer"],
                     ValidAudience = config["JwtSettings:Audience"],
-                    IssuerSigningKey = securityKey,
+                    //IssuerSigningKey = securityKey,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtSettings:key"]!)),
                     ValidateIssuer = true,
                     ValidateActor = true,
                     ValidateLifetime = true,
