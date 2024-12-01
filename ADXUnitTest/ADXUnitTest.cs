@@ -14,7 +14,7 @@ namespace ADXUnitTest
         {
             //Arrange
             var configurationMock = new Mock<IConfiguration>();
-            configurationMock.SetupGet(x => x["JwtSettings: key"]).Returns("fhkjdsfhdslfhdsfkldhfaklhkjsdhfd");
+            configurationMock.SetupGet(x => x["JwtSettings:Key"]).Returns("fhkjdsfhdslfhdsfkldhfaklhkjsdhfd");
 
             IJWTGenerator jwtGenerator = new JWTGenerator(configurationMock.Object);
 
