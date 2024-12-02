@@ -1,4 +1,9 @@
 ﻿using ADXAPI;
+using ADXAPI.Controllers;
+using ADXService;
+using ADXService.Entity;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using System.Data;
@@ -32,17 +37,33 @@ namespace ADXUnitTest
         }
 
         [Fact]
-        public void GetStormData()
+        public async Task GetStormData()
         {
-            var dataReader = new Mock<IDataReader>();
-            dataReader.Setup(m => m.FieldCount).Returns(2);
-            // Mock return from ADX and check c
-        }
+            //Arrange 
 
-        [Fact]
-        public void RowCount()
-        {
-            // Use dataReader and mock resopnse
+            var stormData = new List<StormData>
+            {
+                new StormData
+                {
+                    DateTime = DateTime.Now,
+                    State = "Boston",
+                    DamageCost = 10000000000
+                }
+            };
+
+            var adx = new Mock<IADXAccess>();
+            adx.Setup(x => x.StormEventsData()).Returns(stormData);
+            adx.Setup(x => x.CheckIfTableExist()).Returns(true);
+            ADXController sut = new ADXController(adx.Object);
+
+            //Act
+            var response = sut.GetStormData();
+            var okResult = response as OkObjectResult;
+
+            //Response
+            Assert.IsType<OkObjectResult>(response);
+            Assert.Equivalent(okResult.Value, stormData);
+
         }
     }
 }
