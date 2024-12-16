@@ -20,15 +20,20 @@ Example in memory users to test
 | `Test@gmail.com`  | `test`    |   `true`  |
 | `Test2@gmail.com`  | `test`   |  `false`  |
 
-## `GET /api/ADX/SetupStormEventTable`
 
-**Authentication** - only accessible if your `JWT` claim role is set to a `ADXUser`
+## ADX Authentication 
+ADX Authentication is only accessible if your `JWT` claim role is set to a `ADXUser`
+
+```c#
+ [Authorize (Roles= "ADXUser")]
+ public class ADXController : ControllerBase
+```
+
+## `GET /api/ADX/SetupStormEventTable`
 
 Will create tables if it doesn't exist and ingest storm event data into the table.
 
 ## `GET /api/ADX/GetStormData`
-
-**Authentication** - only accessible if your `JWT` claim role is set to a `ADXUser`
 
 Return storm event data based on the kusto query 
 
