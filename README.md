@@ -1,10 +1,10 @@
 ## Description
-API that is can set up an a ADX environment and return storm data. Uses role-based authentication that it received from the `JWT` token.
+API that can set up an a ADX environment and return storm data. Uses role-based authentication from `JWT`.
 
 ## Endpoints
 
 ## Login
-### `GET /api/Auth/Login`
+## `GET /api/Auth/Login`
 
 Returns `JWT` if the correct email and password is given that expires in 1 hour. 
 
@@ -21,18 +21,18 @@ Example in memory users to test
 | `Test@gmail.com`  | `test`    |   `true`  |
 | `Test2@gmail.com`  | `test`   |  `false`  |
 
-## ADX
-
-## Authorisation 
-All endpoints are only accessible if your `JWT` claim role is set to a `ADXUser`
 
 ## `GET /api/ADX/SetupStormEventTable`
+
+**Authentication** - only accessible if your `JWT` claim role is set to a `ADXUser`
 
 Will create tables if it doesn't exist and ingest storm event data into the table.
 
 ## `GET /api/ADX/GetStormData`
 
-Return StormEvent data based on the kusto query 
+**Authentication** - only accessible if your `JWT` claim role is set to a `ADXUser`
+
+Return storm event data based on the kusto query 
 
 ```kusto
 StormEvents
@@ -64,7 +64,7 @@ StormEvents
 ]
 ```
 
-### Integration Test
+## Integration Test
 - Check if correct status code is returned from the API with different claims role types and if token is not present
 
 ## Unit Test
