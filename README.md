@@ -1,11 +1,10 @@
+## Description
+API that can set up an a ADX environment and return storm data. Uses role-based authentication from `JWT`.
+
 ## Set Up
 -  Create ADX resources using this bicep [ADXAPI/Bicep/main.bicep](https://github.com/AbuSuudy/ADXAPI/blob/master/ADXAPI/Bicep/main.bicep)
 -  Set up key used to generate `JWT` [ADXAPI/appsettings.json](https://github.com/AbuSuudy/ADXAPI/blob/master/ADXAPI/appsettings.json)
 -  Call `GET /api/ADX/SetupStormEventTable` to generate table and ingest storm data. This done via batch process to may take few mins to retrieve from the table.
-
-
-## Description
-API that can set up an a ADX environment and return storm data. Uses role-based authentication from `JWT`.
 
 ## Endpoints
 
