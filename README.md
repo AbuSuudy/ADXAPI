@@ -69,8 +69,7 @@ StormEvents
 
 ## Testing 
 > [!WARNING]  
-> As expected unit test will fail when azure resouce has been removed to save money. Resource could re-created using this bicep template.
-
+> As expected some integration test will fail when azure resouce has been removed to save money. ADX resource could be re-created using this bicep [template](ADXAPI/Bicep/main.bicep)
 
 ## Integration Test
 - Check if correct status code is returned from the API when different claims role types are used and if token is present or not.
