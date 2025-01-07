@@ -42,15 +42,6 @@ Will create tables if it doesn't exist and ingest storm event data into the tabl
 
 Return storm event data based on the kusto query 
 
-```kusto
-StormEvents
-  | where EventType == 'Heavy Rain'
-  | extend TotalDamage = DamageProperty + DamageCrops
-  | summarize DailyDamage=sum(TotalDamage) by State, bin(StartTime, 1d)
-  | where DailyDamage > 1000000
-  | order by DailyDamage desc"
-```
-
 `Response`
 ``` json
 [
@@ -70,6 +61,16 @@ StormEvents
     "damageCost": 8150000
   }
 ]
+```
+
+To Do: Expand frontend to plot these point
+```kusto
+StormEvents
+  | where EventType == 'Heavy Rain'
+  | extend TotalDamage = DamageProperty + DamageCrops
+  | summarize DailyDamage=sum(TotalDamage) by State, bin(StartTime, 1d)
+  | where DailyDamage > 1000000
+  | order by DailyDamage desc"
 ```
 
 ## Testing 
