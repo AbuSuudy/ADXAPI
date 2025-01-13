@@ -1,8 +1,8 @@
-﻿using ADXService;
+﻿using ADXAPI.Model;
+using ADXService;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Xml.Linq;
+using System.Text.Json;
 
 namespace ADXAPI.Controllers
 {
@@ -66,5 +66,24 @@ namespace ADXAPI.Controllers
             }
         }
 
+        [HttpGet]
+        [EndpointSummary("Populates Dashboard")]
+        public IActionResult Dashboard()
+        {
+            try
+            {
+                string readText = System.IO.File.ReadAllText("Dataplaceholder.json");
+
+
+                Dashboard dashboard = JsonSerializer.Deserialize<Dashboard>(readText);
+
+                return Ok(dashboard);
+
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 using ADXAPI.ScalarExtension;
 using ADXService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using System.Security.Cryptography.X509Certificates;
@@ -13,6 +14,7 @@ namespace ADXAPI
     {
         public static void Main(string[] args)
         {
+            var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
             var builder = WebApplication.CreateBuilder(args);
             // Add services to the container.
             builder.Services.AddControllers();
@@ -20,7 +22,18 @@ namespace ADXAPI
             builder.Services.AddOpenApi( options =>
             {
                 options.UseJwtBearerAuthentication();
+            });
 
+            var configuration = builder.Configuration;
+            var frontendURL = configuration.GetValue<string>("frontend_url");
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                    policy =>
+                    {
+                        policy.WithOrigins(frontendURL).AllowAnyOrigin();
+                    });
             });
 
             builder.Services.AddTransient<IADXAccess, ADXAccess>();
@@ -30,7 +43,7 @@ namespace ADXAPI
 
             var key = Encoding.UTF8.GetBytes(config["JwtSettings:key"]);
 
-            builder.Services.AddAuthentication(x =>
+          /*  builder.Services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -50,7 +63,7 @@ namespace ADXAPI
                   
                 };
 
-            });
+            });*/
 
             builder.Services.AddAuthorization();
 
@@ -65,6 +78,8 @@ namespace ADXAPI
             };
 
             app.UseHttpsRedirection();
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthentication();
 

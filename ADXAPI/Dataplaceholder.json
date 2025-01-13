@@ -1,0 +1,255 @@
+{
+  "Data": [
+    {
+      "State": "WASHINGTON",
+      "Long": -122.63,
+      "Lat": 47.53,
+      "DailyDamage": 30000000
+    },
+    {
+      "State": "WASHINGTON",
+      "Long": -123.0181,
+      "Lat": 47.0477,
+      "DailyDamage": 14000000
+    },
+    {
+      "State": "WASHINGTON",
+      "Long": -122.2,
+      "Lat": 47.77,
+      "DailyDamage": 12000000
+    },
+    {
+      "State": "WASHINGTON",
+      "Long": -122.32,
+      "Lat": 47.82,
+      "DailyDamage": 10000000
+    },
+    {
+      "State": "MISSOURI",
+      "Long": -94.58,
+      "Lat": 38.1,
+      "DailyDamage": 8150000
+    },
+    {
+      "State": "WASHINGTON",
+      "Long": -122.9,
+      "Lat": 47.6511,
+      "DailyDamage": 3000000
+    },
+    {
+      "State": "NEBRASKA",
+      "Long": -96.35,
+      "Lat": 41.32,
+      "DailyDamage": 1000000
+    },
+    {
+      "State": "OKLAHOMA",
+      "Long": -98.35,
+      "Lat": 36.75,
+      "DailyDamage": 387000
+    },
+    {
+      "State": "MISSOURI",
+      "Long": -94.43,
+      "Lat": 39.08,
+      "DailyDamage": 200000
+    },
+    {
+      "State": "WISCONSIN",
+      "Long": -89.3,
+      "Lat": 42.78,
+      "DailyDamage": 200000
+    },
+    {
+      "State": "IOWA",
+      "Long": -93.15,
+      "Lat": 40.68,
+      "DailyDamage": 200000
+    },
+    {
+      "State": "NEW JERSEY",
+      "Long": -74.42,
+      "Lat": 40.85,
+      "DailyDamage": 100000
+    },
+    {
+      "State": "NEBRASKA",
+      "Long": -99.08,
+      "Lat": 40.7,
+      "DailyDamage": 100000
+    },
+    {
+      "State": "NEBRASKA",
+      "Long": -99.37,
+      "Lat": 40.45,
+      "DailyDamage": 100000
+    },
+    {
+      "State": "NORTH CAROLINA",
+      "Long": -83.4,
+      "Lat": 35.2723,
+      "DailyDamage": 100000
+    },
+    {
+      "State": "TEXAS",
+      "Long": -97.82,
+      "Lat": 32.48,
+      "DailyDamage": 100000
+    },
+    {
+      "State": "SOUTH DAKOTA",
+      "Long": -101.9376,
+      "Lat": 43.7507,
+      "DailyDamage": 67000
+    },
+    {
+      "State": "TEXAS",
+      "Long": -97.87,
+      "Lat": 27.52,
+      "DailyDamage": 60000
+    },
+    {
+      "State": "FLORIDA",
+      "Long": -80.13,
+      "Lat": 26.17,
+      "DailyDamage": 50000
+    },
+    {
+      "State": "KANSAS",
+      "Long": -95.5607,
+      "Lat": 39.08,
+      "DailyDamage": 50000
+    }
+  ],
+  "ChartData": [
+    {
+      "Name": "WASHINGTON",
+      "Data": [
+        69020000
+      ]
+    },
+    {
+      "Name": "MISSOURI",
+      "Data": [
+        8397000
+      ]
+    },
+    {
+      "Name": "NEBRASKA",
+      "Data": [
+        1412000
+      ]
+    },
+    {
+      "Name": "OKLAHOMA",
+      "Data": [
+        387000
+      ]
+    },
+    {
+      "Name": "IOWA",
+      "Data": [
+        290000
+      ]
+    },
+    {
+      "Name": "TEXAS",
+      "Data": [
+        260000
+      ]
+    },
+    {
+      "Name": "WISCONSIN",
+      "Data": [
+        240500
+      ]
+    },
+    {
+      "Name": "KANSAS",
+      "Data": [
+        146000
+      ]
+    },
+    {
+      "Name": "NORTH CAROLINA",
+      "Data": [
+        100000
+      ]
+    },
+    {
+      "Name": "NEW JERSEY",
+      "Data": [
+        100000
+      ]
+    },
+    {
+      "Name": "SOUTH DAKOTA",
+      "Data": [
+        67000
+      ]
+    },
+    {
+      "Name": "CALIFORNIA",
+      "Data": [
+        55000
+      ]
+    },
+    {
+      "Name": "FLORIDA",
+      "Data": [
+        52000
+      ]
+    },
+    {
+      "Name": "PUERTO RICO",
+      "Data": [
+        27030
+      ]
+    },
+    {
+      "Name": "MINNESOTA",
+      "Data": [
+        20000
+      ]
+    },
+    {
+      "Name": "ARIZONA",
+      "Data": [
+        15000
+      ]
+    },
+    {
+      "Name": "WEST VIRGINIA",
+      "Data": [
+        10000
+      ]
+    },
+    {
+      "Name": "NEW YORK",
+      "Data": [
+        10000
+      ]
+    },
+    {
+      "Name": "GEORGIA",
+      "Data": [
+        6000
+      ]
+    },
+    {
+      "Name": "TENNESSEE",
+      "Data": [
+        5000
+      ]
+    }
+  ],
+  "Maximum": {
+    "State": "WASHINGTON",
+    "DamageCost": 30000000
+  },
+  "Minimum": {
+    "State": "KANSAS",
+    "DamageCost": 50000
+  },
+  "Average": 3993700
+}
