@@ -1,10 +1,8 @@
 using ADXAPI.ScalarExtension;
 using ADXService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace ADXAPI
@@ -19,7 +17,7 @@ namespace ADXAPI
             // Add services to the container.
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-            builder.Services.AddOpenApi( options =>
+            builder.Services.AddOpenApi(options =>
             {
                 options.UseJwtBearerAuthentication();
             });
@@ -43,7 +41,7 @@ namespace ADXAPI
 
             var key = Encoding.UTF8.GetBytes(config["JwtSettings:key"]);
 
-          /*  builder.Services.AddAuthentication(x =>
+            builder.Services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -60,10 +58,10 @@ namespace ADXAPI
                     ValidateActor = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                  
+
                 };
 
-            });*/
+            });
 
             builder.Services.AddAuthorization();
 
@@ -71,7 +69,7 @@ namespace ADXAPI
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
-            {              
+            {
                 app.MapOpenApi();
 
                 app.MapScalarApiReference();

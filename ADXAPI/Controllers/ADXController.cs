@@ -7,7 +7,7 @@ using System.Text.Json;
 namespace ADXAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
-    [Authorize (Roles= "ADXUser")]
+   // [Authorize (Roles= "ADXUser")]
     [ApiController]
     public class ADXController : ControllerBase
     {
