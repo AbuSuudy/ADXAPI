@@ -7,7 +7,7 @@ using System.Text.Json;
 namespace ADXAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
-   // [Authorize (Roles= "ADXUser")]
+    [Authorize (Roles= "ADXUser")]
     [ApiController]
     public class ADXController : ControllerBase
     {
@@ -73,12 +73,13 @@ namespace ADXAPI.Controllers
             try
             {
                 //Use local json when ADX has been removed for dev
-                //string readText = System.IO.File.ReadAllText("Dataplaceholder.json");
+                string readText = System.IO.File.ReadAllText("Dataplaceholder.json");
+                Dashboard dashboard = JsonSerializer.Deserialize<Dashboard>(readText);
 
 
-                //Dashboard dashboard = JsonSerializer.Deserialize<Dashboard>(readText);
+                //Dashboard dashboard  = _adxAccces.StormEventsDashboard()
 
-                return Ok(_adxAccces.StormEventsDashboard());
+                return Ok(dashboard);
 
             }
             catch (Exception ex)

@@ -30,7 +30,7 @@ namespace ADXAPI
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                     policy =>
                     {
-                        policy.WithOrigins(frontendURL).AllowAnyOrigin();
+                        policy.WithOrigins(frontendURL).AllowAnyOrigin().AllowAnyHeader();
                     });
             });
 
