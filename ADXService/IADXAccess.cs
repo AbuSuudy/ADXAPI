@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace ADXService
 {
     public interface IADXAccess
@@ -18,6 +17,8 @@ namespace ADXService
         bool CheckIfTableExist();
 
         List<StormData> StormEventsData();
+
+        Dashboard StormEventsDashboard();
 
         long RowCount();
     }

@@ -72,12 +72,13 @@ namespace ADXAPI.Controllers
         {
             try
             {
-                string readText = System.IO.File.ReadAllText("Dataplaceholder.json");
+                //Use local json when ADX has been removed for dev
+                //string readText = System.IO.File.ReadAllText("Dataplaceholder.json");
 
 
-                Dashboard dashboard = JsonSerializer.Deserialize<Dashboard>(readText);
+                //Dashboard dashboard = JsonSerializer.Deserialize<Dashboard>(readText);
 
-                return Ok(dashboard);
+                return Ok(_adxAccces.StormEventsDashboard());
 
             }
             catch (Exception ex)

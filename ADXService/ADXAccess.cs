@@ -208,5 +208,81 @@ namespace ADXService
                 return results.SingleOrDefault();
             };
         }
+
+        public Dashboard StormEventsDashboard()
+        {
+            Dashboard dashboard = new Dashboard
+            {
+                Data = new List<StateData>(),
+                ChartData = new List<ChartData>()
+            };
+     
+            using (var kustoClient = KustoClientFactory.CreateCslQueryProvider(kustoConnectionStringBuilder))
+            {
+
+                string query = @"StormEvents
+                                  | where EventType == 'Heavy Rain'
+                                  | extend TotalDamage = DamageProperty + DamageCrops
+                                  | summarize DailyDamage=sum(TotalDamage) by State, bin(StartTime, 1d), BeginLon, BeginLat
+                                  | order by DailyDamage desc
+                                  | take 20";
+
+                using (IDataReader response = kustoClient.ExecuteQuery(databaseName, query, null))
+                {
+                    //GetOrdinal returns index based on the name
+                    int columnNoStartTime = response.GetOrdinal("StartTime");
+                    int columnNoState = response.GetOrdinal("State");
+                    int columnNoDailyDamage = response.GetOrdinal("DailyDamage");
+                    int columnNoBeginLong = response.GetOrdinal("BeginLon");
+                    int columnNoBeginLat = response.GetOrdinal("BeginLat");
+
+                    dashboard.Data = new List<StateData>();
+                    while (response.Read())
+                    {
+                        dashboard.Data.Add(new StateData
+                        {
+                            State = response.GetString(columnNoState),
+                            DailyDamage = response.GetInt64(columnNoDailyDamage),
+                            Lat = response.GetDouble(columnNoBeginLat),
+                            Long = response.GetDouble(columnNoBeginLong),
+
+                        });
+                    }
+                }
+            }
+
+            dashboard.Average = dashboard.Data.Average(x => x.DailyDamage);
+
+            var list = dashboard.Data.OrderBy(x => x.DailyDamage).ToList();
+
+            dashboard.Minimum = list.Select(x => new Minimum
+            {
+                State = x.State,
+                DamageCost = x.DailyDamage,
+
+            }).FirstOrDefault();
+
+            dashboard.Maximum = list.Select(x => new Maximum
+            {
+                State = x.State,
+                DamageCost = x.DailyDamage,
+
+            }).LastOrDefault();
+
+            //Json format for chart
+            foreach (var item in dashboard.Data)
+            {
+                dashboard.ChartData.Add(new ChartData
+                {
+                    Name = item.State,
+                    Data = new List<long>()
+                    {
+                        item.DailyDamage
+                    }
+                });
+            }
+
+            return dashboard;
+        }
     }
 }
