@@ -209,14 +209,8 @@ namespace ADXService
             };
         }
 
-        public Dashboard StormEventsDashboard()
+        public Dashboard DALDashboard(Dashboard dashboard)
         {
-            Dashboard dashboard = new Dashboard
-            {
-                Data = new List<StateData>(),
-                ChartData = new List<ChartData>()
-            };
-
             using (var kustoClient = KustoClientFactory.CreateCslQueryProvider(kustoConnectionStringBuilder))
             {
 
@@ -260,6 +254,19 @@ namespace ADXService
                 }
             }
 
+            return dashboard;
+        }
+
+        public Dashboard StormEventsDashboard()
+        {
+            Dashboard dashboard = new Dashboard
+            {
+                Data = new List<StateData>(),
+                ChartData = new List<ChartData>()
+            };
+
+            DALDashboard(dashboard);
+
             dashboard.Average = dashboard.Data.Average(x => x.DailyDamage);
 
             //order once
@@ -278,7 +285,6 @@ namespace ADXService
                 DamageCost = x.DailyDamage,
 
             }).LastOrDefault();
-
 
             return dashboard;
         }
