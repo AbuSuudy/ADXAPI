@@ -216,7 +216,7 @@ namespace ADXService
                 Data = new List<StateData>(),
                 ChartData = new List<ChartData>()
             };
-     
+
             using (var kustoClient = KustoClientFactory.CreateCslQueryProvider(kustoConnectionStringBuilder))
             {
 
@@ -247,12 +247,22 @@ namespace ADXService
                             Long = response.GetDouble(columnNoBeginLong),
 
                         });
+
+                        dashboard.ChartData.Add(new ChartData
+                        {
+                            Data = new List<long>()
+                            {
+                               response.GetInt64(columnNoDailyDamage)
+                            },
+                            Name = response.GetString(columnNoState)
+                        });
                     }
                 }
             }
 
             dashboard.Average = dashboard.Data.Average(x => x.DailyDamage);
 
+            //order once
             var list = dashboard.Data.OrderBy(x => x.DailyDamage).ToList();
 
             dashboard.Minimum = list.Select(x => new Minimum
@@ -269,18 +279,6 @@ namespace ADXService
 
             }).LastOrDefault();
 
-            //Json format for chart
-            foreach (var item in dashboard.Data)
-            {
-                dashboard.ChartData.Add(new ChartData
-                {
-                    Name = item.State,
-                    Data = new List<long>()
-                    {
-                        item.DailyDamage
-                    }
-                });
-            }
 
             return dashboard;
         }
