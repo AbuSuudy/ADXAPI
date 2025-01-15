@@ -1,5 +1,4 @@
 ﻿using ADXAPI.Model;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ADXAPI.Controllers
@@ -26,13 +25,13 @@ namespace ADXAPI.Controllers
         };
 
         IJWTGenerator jwtGenerator;
-        public AuthController(IJWTGenerator jwtGenerator) 
-        { 
-        
+        public AuthController(IJWTGenerator jwtGenerator)
+        {
+
             this.jwtGenerator = jwtGenerator;
         }
 
-  
+
         [EndpointSummary("Login")]
         [EndpointDescription("returns `jwt`")]
         [HttpGet(Name = "Login")]
@@ -40,19 +39,16 @@ namespace ADXAPI.Controllers
         {
             try
             {
-                if (!users.Any(x => x.Email == email))
-                {
-                    return NotFound("User not found");
 
-                }
+
                 var user = users.FirstOrDefault(x => x.Email == email);
 
-                if (password != user.Password)
+                if (!users.Any(x => x.Email == email) || password != user.Password)
                 {
                     return Unauthorized("Wrong email or password");
                 }
 
-                return Ok(jwtGenerator.GenerateToken(user.Email, user.ADXUser));
+                return Ok(new { jwt = jwtGenerator.GenerateToken(user.Email,user.ADXUser), adxUser = user.ADXUser });
 
             }
             catch (Exception ex)
